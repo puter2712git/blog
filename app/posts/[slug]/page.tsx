@@ -18,10 +18,10 @@ export default async function PostPage({ params }: PostPageProps) {
   if (!postData) return <div>글을 찾을 수 없습니다.</div>;
 
   return (
-    <article className="p-10 max-w-2xl mx-auto">
+    <article className="p-10 max-w-5xl mx-auto">
       <h1 className="text-4xl font-bold mb-4">{postData.title}</h1>
       <div
-        className="prose dark:prose-invert"
+        className="prose dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
       />
     </article>
