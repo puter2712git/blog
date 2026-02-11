@@ -7,6 +7,8 @@ import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 const postsDirectory = path.join(process.cwd(), 'content')
 
@@ -66,7 +68,9 @@ export async function getPostData(slug: string) {
   const processedContent = await unified()
     .use(remarkParse)
     .use(remarkGfm)
+    .use(remarkMath)
     .use(remarkRehype)
+    .use(rehypeKatex)
     .use(rehypeHighlight)
     .use(rehypeStringify)
     .process(content);
