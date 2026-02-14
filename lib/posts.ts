@@ -19,6 +19,7 @@ export interface PostData {
   description: string;
   contentHtml?: string;
   tags: string[];
+  category?: string;
 }
 
 function getFilesRecursively(dir: string): string[] {
@@ -48,6 +49,7 @@ export function getAllPosts(): PostData[] {
       date: data.date,
       description: data.description,
       tags: data.tags || [],
+      category: data.category || '미분류',
     } as PostData;
   });
 
@@ -81,6 +83,18 @@ export async function getPostData(slug: string) {
     slug,
     contentHtml,
     tags: data.tags || [],
+    category: data.category || '미분류',
     ...(data as { title: string, date: string, description: string }),
   };
+}
+
+export function getAllCategories(): string[] {
+  const posts = getAllPosts();
+  const categories = new Set(posts.map(post => post.category || '미분류'));
+  return Array.from(categories).sort();
+}
+
+export function getPostsByCategory(category: string): PostData[] {
+  const allPosts = getAllPosts();
+  return allPosts.filter(post => post.category === category);
 }

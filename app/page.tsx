@@ -1,29 +1,45 @@
-import { getAllPosts } from "@/lib/posts";
+import { getAllPosts, getAllCategories } from "@/lib/posts";
 import Link from "next/link";
+import PostsList from "./components/PostsList";
 
 export default function Home() {
-  const posts = getAllPosts();
+  const allPosts = getAllPosts();
+  const categories = getAllCategories();
 
   return (
-    <main className="p-10">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">내 블로그 목록</h1>
+    <main className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <div className="flex justify-between items-center mb-12">
+            <div>
+              <h1 className="text-5xl sm:text-6xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                개발 블로그
+              </h1>
+              <p className="text-xl text-gray-600 dark:text-gray-400">
+                프로토타입
+              </p>
+            </div>
+            <Link 
+              href="/todo" 
+              className="px-6 py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200 whitespace-nowrap hidden sm:inline-block"
+            >
+              ✓ Todo List
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <PostsList allPosts={allPosts} categories={categories} />
+
+      {/* Mobile Todo Button */}
+      <div className="fixed bottom-6 right-6 sm:hidden">
         <Link 
           href="/todo" 
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center justify-center w-14 h-14 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-200 font-semibold text-xl"
         >
-          📝 Todo List
+          ✓
         </Link>
-      </div>
-      <div className="space-y-4">
-        {posts.map((post) => (
-          <div key={post.slug} className="border-b pb-4">
-            <Link href={`/posts/${post.slug}`} className="text-xl font-semibold text-blue-600">
-              {post.title}
-            </Link>
-            <p className="text-gray-500">{post.date}</p>
-          </div>
-        ))}
       </div>
     </main>
   )
